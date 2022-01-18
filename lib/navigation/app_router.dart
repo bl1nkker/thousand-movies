@@ -27,12 +27,12 @@ class AppRouter extends RouterDelegate
       onPopPage: _handlePopPage,
       // Declares pages, the stack of pages that describes your navigation stack
       pages: [
-        if (appStateManager.selectedIndex == -1)
-          HomeScreen.page()
-        else
+        if (appStateManager.selectedIndex != -1)
           DetailsScreen.page(
               movie: appStateManager.selectedMovieItem,
               index: appStateManager.selectedIndex)
+        else
+          HomeScreen.page()
       ],
     );
   }

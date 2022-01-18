@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         ],
         child: MaterialApp(
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.amber,
           ),
           home: Router(
             backButtonDispatcher: RootBackButtonDispatcher(),

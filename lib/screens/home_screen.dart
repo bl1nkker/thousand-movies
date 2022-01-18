@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:thousand_movies/models/app_state_manager.dart';
 import 'package:thousand_movies/models/movie_model.dart';
@@ -76,7 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: movies.length,
       // 8
       itemBuilder: (BuildContext context, int index) {
-        return MovieCard(movie: movies[index]);
+        return MovieCard(
+          movie: movies[index],
+        );
       },
     );
   }
@@ -95,12 +98,8 @@ class MovieCard extends StatelessWidget {
         tag: movie.id,
         child: GestureDetector(
           onTap: () {
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => DetailsScreen(
-            //               itemData: RE_DATA[index],
-            //             )));
+            Provider.of<AppStateManager>(context, listen: false)
+                .setSelectedMovieItem(movie.id);
           },
           child: CachedNetworkImage(
             imageUrl: 'http://image.tmdb.org/t/p/w500/${movie.poster_path}',
@@ -125,7 +124,6 @@ class MovieCard extends StatelessWidget {
                   ]),
               child: Stack(
                 children: [
-                  Positioned(top: 0, right: 0, child: Text('123')),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -138,7 +136,8 @@ class MovieCard extends StatelessWidget {
                           movie.original_title,
                           style: TextStyle(
                               backgroundColor: Colors.amber,
-                              color: Colors.black),
+                              color: Colors.black,
+                              fontSize: 24),
                         ),
                       ),
                       const SizedBox(
@@ -149,9 +148,9 @@ class MovieCard extends StatelessWidget {
                         // color: COLOR_BLACK,
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
-                          'Some anime name',
+                          DateFormat("yMMMMd").format(movie.release_date),
                           style: TextStyle(
-                              backgroundColor: Colors.amber,
+                              backgroundColor: Colors.white,
                               color: Colors.black),
                         ),
                       ),
