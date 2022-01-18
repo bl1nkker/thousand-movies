@@ -16,7 +16,7 @@ class MoviesService {
 
   Future<dynamic> getMovies(int page) async {
     final moviesData = await getData(
-        'https://api.themoviedb.org/3/movie/popular?api_key=${DotEnv.dotenv.env['YANDEX_API_KEY']}&language=en-US&page=$page');
+        'https://api.themoviedb.org/3/movie/popular?api_key=${DotEnv.dotenv.env['API_KEY']}&language=en-US&page=$page');
     final moviesMap = json.decode(moviesData);
     return (moviesMap['results'] as List)
         .map((e) => Movie.fromJson(e))
