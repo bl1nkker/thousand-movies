@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thousand_movies/models/app_state_manager.dart';
 import 'package:thousand_movies/navigation/app_router.dart';
-import 'package:thousand_movies/screens/home_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
-void main() {
+void main() async {
+  await DotEnv.dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 

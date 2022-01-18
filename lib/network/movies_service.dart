@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:thousand_movies/models/movie_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
 class MoviesService {
   Future getData(String url) async {
@@ -15,7 +16,7 @@ class MoviesService {
 
   Future<dynamic> getMovies(int page) async {
     final moviesData = await getData(
-        'https://api.themoviedb.org/3/movie/popular?api_key=64dd5fbe2a0241ba5b8c174482243af2&language=en-US&page=$page');
+        'https://api.themoviedb.org/3/movie/popular?api_key=${DotEnv.dotenv.env['YANDEX_API_KEY']}&language=en-US&page=$page');
     final moviesMap = json.decode(moviesData);
     return (moviesMap['results'] as List)
         .map((e) => Movie.fromJson(e))
