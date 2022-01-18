@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thousand_movies/db/movies_database.dart';
 import 'package:thousand_movies/models/movie_model.dart';
 import 'package:thousand_movies/network/movies_service.dart';
 
@@ -10,11 +11,21 @@ class AppStateManager extends ChangeNotifier {
   int get selectedIndex => _selectedIndex;
   Movie? get selectedMovieItem =>
       selectedIndex != -1 ? _movieItems[selectedIndex] : null;
+  void retrieveToDos() async {
+    notifyListeners();
+  }
 
   Future getMovieItems() async {
     // Check SQFLITE here
-    final movies = await MoviesService().getMovies(1);
-    _movieItems = movies;
+    final _dbMovies = await MoviesDatabase.instance.readAll();
+    if (_dbMovies.isEmpty) {
+      final movies = await MoviesService().getMovies(1);
+      _movieItems = movies;
+      MoviesDatabase.instance.addMoviesToDb(movies);
+    } else {
+      print('Data from database');
+      _movieItems = _dbMovies;
+    }
     notifyListeners();
   }
 
