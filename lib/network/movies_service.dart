@@ -16,6 +16,9 @@ class MoviesService {
   Future<dynamic> getMovies(int page) async {
     final moviesData = await getData(
         'https://api.themoviedb.org/3/movie/popular?api_key=64dd5fbe2a0241ba5b8c174482243af2&language=en-US&page=$page');
-    return moviesData;
+    final moviesMap = json.decode(moviesData);
+    return (moviesMap['results'] as List)
+        .map((e) => Movie.fromJson(e))
+        .toList();
   }
 }

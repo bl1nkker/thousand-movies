@@ -23,6 +23,6 @@ class Movie {
       overview: json['overview'],
       poster_path: json['poster_path'],
       // release_date: json['release_date'],
-      vote_average: json['vote_average'],
+      vote_average: json['vote_average'] / 1,
       vote_count: json['vote_count']);
 }
