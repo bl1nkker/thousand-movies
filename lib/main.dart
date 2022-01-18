@@ -1,21 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thousand_movies/models/app_state_manager.dart';
+import 'package:thousand_movies/navigation/app_router.dart';
 import 'package:thousand_movies/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SafeArea(child: HomeScreen()),
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _appStateManager = AppStateManager();
+  late AppRouter _appRouter;
+  @override
+  void initState() {
+    _appRouter = AppRouter(
+      appStateManager: _appStateManager,
     );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => _appStateManager,
+          ),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: Router(
+            backButtonDispatcher: RootBackButtonDispatcher(),
+            routerDelegate: _appRouter,
+          ),
+          title: 'Thousand Movies',
+        ));
   }
 }

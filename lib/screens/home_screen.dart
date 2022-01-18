@@ -5,6 +5,15 @@ import 'package:thousand_movies/models/movie_model.dart';
 import 'package:thousand_movies/network/movies_service.dart';
 
 class HomeScreen extends StatefulWidget {
+  static MaterialPage page({
+    Movie? movie,
+    int index = -1,
+  }) {
+    return MaterialPage(
+      child: HomeScreen(),
+    );
+  }
+
   HomeScreen({Key? key}) : super(key: key);
 
   @override
