@@ -11,9 +11,6 @@ class AppStateManager extends ChangeNotifier {
   int get selectedIndex => _selectedIndex;
   Movie? get selectedMovieItem =>
       selectedIndex != -1 ? _movieItems[selectedIndex] : null;
-  void retrieveToDos() async {
-    notifyListeners();
-  }
 
   Future getMovieItems() async {
     // Check SQFLITE here
